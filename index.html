@@ -4,6 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>رفيق المسلم</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1f7a52">
+<link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{--bg:#f6f3ec;--card:#fff;--tx:#1d2b24;--mut:#6b7a72;--ac:#1f7a52;--ac2:#d9efe4;--bd:#e3ddd0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101814;--card:#18231d;--tx:#e8efe9;--mut:#93a39a;--ac:#3fc08a;--ac2:#1f3a2e;--bd:#27382f}}
@@ -291,6 +294,7 @@ document.querySelectorAll("#pnl [data-th]").forEach(function(b){b.onclick=functi
 $("zm").onclick=function(){PF.z=Math.max(0.85,Math.round((PF.z-0.1)*100)/100);sv("pref",PF);ap()};
 $("zp").onclick=function(){PF.z=Math.min(1.5,Math.round((PF.z+0.1)*100)/100);sv("pref",PF);ap()};
 ap();
+if("serviceWorker" in navigator){try{navigator.serviceWorker.register("sw.js").catch(function(){})}catch(e){}}
 </script>
 </body>
 </html>
