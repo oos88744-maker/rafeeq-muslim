@@ -100,10 +100,10 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:8px}
 <section class="tab" id="t4"><div id="utop"><div class="mq" id="ust"></div><div class="card" id="uct"></div></div><div class="mut" style="margin:10px 0">العدّاد ثابت فوق والأدعية تحته. اقرأ وادعُ وأنت تطوف وتسعى. للفتوى في حالتك الخاصة راجع عالماً أو حملة الحج والعمرة.</div><div id="umr"></div></section>
 <section class="tab" id="t5">
 <div id="qwrap"><h1>📜 القرآن الكريم</h1><div id="qst" class="mut"></div><div id="qlastb"></div><input id="qs" placeholder="ابحث باسم السورة أو رقمها" style="width:100%;text-align:right;margin-bottom:10px"><div id="qsl"></div></div>
-<div id="qread" hidden><div class="card" style="position:sticky;top:env(safe-area-inset-top,0px);z-index:5"><div class="row" style="flex-wrap:nowrap;justify-content:space-between"><button class="btn o" id="qback" style="padding:6px 10px">☰ السور</button><b id="qtt"></b><span id="qci" class="mut"></span></div><div class="row" style="margin-top:8px;flex-wrap:nowrap"><button class="btn o" id="qpv">⏮</button><button class="btn" id="qpl">▶</button><button class="btn o" id="qnx">⏭</button><select id="qrc" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div><div id="qer" class="mut"></div></div><div id="qtx"></div></div>
+<div id="qread" hidden><div class="card" style="position:sticky;top:env(safe-area-inset-top,0px);z-index:5"><div class="row" style="flex-wrap:nowrap;justify-content:space-between"><button class="btn o" id="qback" style="padding:6px 10px">☰ السور</button><b id="qtt"></b><span id="qci" class="mut"></span></div><div class="row" style="margin-top:8px;flex-wrap:nowrap"><button class="btn o" id="qpv">⏮</button><button class="btn" id="qpl">▶</button><button class="btn o" id="qnx">⏭</button><select id="qrc" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div><div class="row" style="margin-top:6px"><button class="btn o" id="qdl" style="padding:6px 10px">⬇ تحميل للسماع بدون نت</button><span id="qdi" class="mut"></span></div><div id="qer" class="mut"></div></div><div id="qtx"></div></div>
 <div class="mut" style="margin-top:14px">التلاوات من <a href="https://everyayah.com/" target="_blank" rel="noopener" style="color:var(--ac)">everyayah.com</a>، جزى الله القرّاء والقائمين عليه خيراً. نص المصحف من Al-Quran Cloud API.</div>
 </section>
-<footer>الإصدار 1.7</footer>
+<footer>الإصدار 1.8</footer>
 </main>
 <button id="gear" aria-label="الإعدادات">⚙️</button><div id="pnl" hidden><b>المظهر</b><div class="row" style="margin:8px 0"><button class="btn o" style="padding:6px 10px" data-th="auto">تلقائي</button><button class="btn o" style="padding:6px 10px" data-th="light">فاتح</button><button class="btn o" style="padding:6px 10px" data-th="dark">ليلي</button><button class="btn o" style="padding:6px 10px" data-th="eye">مريح للعين</button></div><b>حجم الخط</b><div class="row" style="margin-top:8px"><button class="btn o" id="zm">A−</button><span id="zv">100%</span><button class="btn o" id="zp">A+</button></div></div>
 <nav>
@@ -315,10 +315,14 @@ S.a.forEach(function(t,k){if(k==0&&S.n!=1){var w=t.split(" ");if(w.length>4&&sn(
 h+="<div class='qa' data-k='"+k+"'>"+t+"<span class='qn'>"+(k+1)+"</span></div>"});
 $("qtx").innerHTML=h;$("qtt").textContent=S.name;$("qwrap").hidden=true;$("qread").hidden=false;
 $("qtx").querySelectorAll(".qa[data-k]").forEach(function(d){d.onclick=function(){qplay(+d.dataset.k)}});
-$("qer").textContent="";qui();window.scrollTo(0,0);
+$("qer").textContent="";qui();qdi();window.scrollTo(0,0);
 if(i>0){var e=$("qtx").querySelector("[data-k='"+i+"']");if(e)e.scrollIntoView({block:"center"})}}
 function qurl(k){return "https://everyayah.com/data/"+RC[QR].f+"/"+("00"+QD[QN].n).slice(-3)+("00"+(k+1)).slice(-3)+".mp3"}
-function qplay(k){QI=k;QP=true;$("qer").textContent="";AU.src=qurl(k);AU.play().catch(function(){});QL={s:QN,i:k};sv("qlast",QL);qui()}
+var QSEQ=0,QDL=false,QOU=null;
+function qplay(k){QI=k;QP=true;$("qer").textContent="";QL={s:QN,i:k};sv("qlast",QL);qui();var u=qurl(k),my=++QSEQ;
+var go=function(src){if(my!==QSEQ)return;if(QOU){URL.revokeObjectURL(QOU);QOU=null}if(src!==u)QOU=src;AU.src=src;AU.play().catch(function(){})};
+if(!window.caches){go(u);return}
+caches.open("qaudio").then(function(c){return c.match(u)}).then(function(r){return r?r.blob():null}).then(function(b){go(b?URL.createObjectURL(b):u)}).catch(function(){go(u)})}
 function qui(){$("qpl").textContent=QP?"⏸":"▶";$("qci").textContent=QI>=0?"آية "+(QI+1)+" / "+QD[QN].a.length:"";
 $("qtx").querySelectorAll(".qa[data-k]").forEach(function(d){d.classList.toggle("cur",+d.dataset.k==QI)});
 var e=QI>=0&&QP?$("qtx").querySelector("[data-k='"+QI+"']"):null;if(e)e.scrollIntoView({block:"center",behavior:"smooth"})}
@@ -329,8 +333,26 @@ $("qnx").onclick=function(){if(QI+1<QD[QN].a.length)qplay(QI+1)};
 $("qpv").onclick=function(){qplay(Math.max(0,QI-1))};
 $("qback").onclick=function(){AU.pause();QP=false;$("qread").hidden=true;$("qwrap").hidden=false;qlist()};
 $("qrc").innerHTML=RC.map(function(r,i){return "<option value='"+i+"'>"+r.n+"</option>"}).join("");$("qrc").value=QR;
-$("qrc").onchange=function(){QR=+$("qrc").value;sv("qrec",QR);if(QP&&QI>=0)qplay(QI)};
+$("qrc").onchange=function(){QR=+$("qrc").value;sv("qrec",QR);qdi();if(QP&&QI>=0)qplay(QI)};
 $("qs").oninput=function(){if(QD)qlist()};
+function qkeys(n,f){var a=[],N=QD[n-1].a.length;for(var k=0;k<N;k++)a.push("https://everyayah.com/data/"+f+"/"+("00"+n).slice(-3)+("00"+(k+1)).slice(-3)+".mp3");return a}
+function qdi(){if(!window.caches){$("qdl").hidden=true;return}
+var ks=qkeys(QD[QN].n,RC[QR].f);
+caches.open("qaudio").then(function(c){return Promise.all(ks.map(function(u){return c.match(u)}))}).then(function(r){var n=r.filter(Boolean).length,full=n==ks.length;
+$("qdi").textContent=n==0?"":(full?"✅ محمّلة كاملة":"محمّل "+n+" من "+ks.length);
+$("qdl").textContent=full?"🗑 حذف التحميل":"⬇ تحميل للسماع بدون نت";$("qdl").dataset.full=full?"1":"0"})}
+$("qdl").onclick=function(){
+if(QDL){QDL=false;return}
+var ks=qkeys(QD[QN].n,RC[QR].f);
+caches.open("qaudio").then(function(c){
+if($("qdl").dataset.full=="1"){return Promise.all(ks.map(function(u){return c.delete(u)})).then(qdi)}
+if(ks.length>100&&!confirm("هذي السورة طويلة وقد تأخذ مساحة كبيرة (مئات الميجا). تكمل؟"))return;
+if(navigator.storage&&navigator.storage.persist)navigator.storage.persist();
+QDL=true;$("qdl").textContent="⏹ إيقاف";var done=0,i=0,err=false;
+function next(){if(!QDL||err||i>=ks.length)return Promise.resolve();var u=ks[i++];
+return c.match(u).then(function(h){if(h){done++;$("qdi").textContent=done+" / "+ks.length;return}
+return fetch(u).then(function(r){if(!r.ok)throw 0;return c.put(u,r)}).then(function(){done++;$("qdi").textContent=done+" / "+ks.length})}).then(next)}
+return Promise.all([next(),next(),next()]).catch(function(){err=true;$("qer").textContent="تعذر التحميل: ممكن المصدر ما يسمح بالتحميل داخل التطبيق أو انقطع النت."}).then(function(){QDL=false;qdi()})})};
 function qinit(){if(QD){qlist();return}qfetch(function(){qlist()})}
 document.querySelector('nav [data-t="5"]').addEventListener("click",qinit);
 var PF=ld("pref",{th:"auto",z:1});
