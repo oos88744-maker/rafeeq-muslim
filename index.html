@@ -99,11 +99,26 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:8px}
 </section>
 <section class="tab" id="t4"><div id="utop"><div class="mq" id="ust"></div><div class="card" id="uct"></div></div><div class="mut" style="margin:10px 0">العدّاد ثابت فوق والأدعية تحته. اقرأ وادعُ وأنت تطوف وتسعى. للفتوى في حالتك الخاصة راجع عالماً أو حملة الحج والعمرة.</div><div id="umr"></div></section>
 <section class="tab" id="t5">
+<div class="row" style="margin-bottom:10px;flex-wrap:nowrap"><button class="btn" id="qmb1" style="flex:1">📖 قراءة واستماع</button><button class="btn o" id="qmb2" style="flex:1">🎙 تسميع وتصحيح</button></div>
+<div id="qm1">
 <div id="qwrap"><h1>📜 القرآن الكريم</h1><div id="qst" class="mut"></div><div id="qlastb"></div><input id="qs" placeholder="ابحث باسم السورة أو رقمها" style="width:100%;text-align:right;margin-bottom:10px"><div id="qsl"></div></div>
-<div id="qread" hidden><div class="card" style="position:sticky;top:env(safe-area-inset-top,0px);z-index:5"><div class="row" style="flex-wrap:nowrap;justify-content:space-between"><button class="btn o" id="qback" style="padding:6px 10px">☰ السور</button><b id="qtt"></b><span id="qci" class="mut"></span></div><div class="row" style="margin-top:8px;flex-wrap:nowrap"><button class="btn o" id="qpv">⏮</button><button class="btn" id="qpl">▶</button><button class="btn o" id="qnx">⏭</button><select id="qrc" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div><div class="row" style="margin-top:6px"><button class="btn o" id="qdl" style="padding:6px 10px">⬇ تحميل للسماع بدون نت</button><span id="qdi" class="mut"></span></div><div id="qer" class="mut"></div></div><div id="qtx"></div></div>
+<div id="qread" hidden><div class="card" style="position:sticky;top:env(safe-area-inset-top,0px);z-index:5"><div class="row" style="flex-wrap:nowrap;justify-content:space-between"><button class="btn o" id="qback" style="padding:6px 10px">☰ السور</button><b id="qtt"></b><span id="qci" class="mut"></span></div><div class="row" style="margin-top:8px;flex-wrap:nowrap"><button class="btn o" id="qpv">⏮</button><button class="btn" id="qpl">▶</button><button class="btn o" id="qnx">⏭</button><select id="qrc" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div><div class="row" style="margin-top:6px"><button class="btn o" id="qdl" style="padding:6px 10px">⬇ تحميل للسماع بدون نت</button><span id="qdi" class="mut"></span></div><div id="qer" class="mut"></div></div><div id="qtx"></div>
+</div>
+<div id="qm2" hidden>
+<h1>🎙 تسميع وتصحيح</h1>
+<div class="card">
+<div class="row"><span>السورة</span><select id="tss" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div>
+<div class="row" style="margin-top:8px"><span>من آية</span><input id="tsf" type="number" min="1" value="1"><span>إلى</span><input id="tst" type="number" min="1" value="5"></div>
+<div class="row" style="margin-top:8px"><span>الشيخ</span><select id="tsr" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div>
+<p class="mut" style="margin:8px 0 0">اقرأ من حفظك والنص مخفي. تحتاج نت وميكروفون ومتصفح Chrome. «صح» تعني تطابق الكلمات فقط، ولا تشمل التجويد والحركات.</p>
+</div>
+<button class="btn" id="tsb" style="width:100%;font-size:18px;padding:14px">🎙 ابدأ التسميع</button>
+<div id="tsm" class="mut" style="margin:8px 0"></div>
+<div id="tsx"></div>
+</div>
 <div class="mut" style="margin-top:14px">التلاوات من <a href="https://everyayah.com/" target="_blank" rel="noopener" style="color:var(--ac)">everyayah.com</a>، جزى الله القرّاء والقائمين عليه خيراً. نص المصحف من Al-Quran Cloud API.</div>
 </section>
-<footer>الإصدار 1.8</footer>
+<footer>الإصدار 1.9</footer>
 </main>
 <button id="gear" aria-label="الإعدادات">⚙️</button><div id="pnl" hidden><b>المظهر</b><div class="row" style="margin:8px 0"><button class="btn o" style="padding:6px 10px" data-th="auto">تلقائي</button><button class="btn o" style="padding:6px 10px" data-th="light">فاتح</button><button class="btn o" style="padding:6px 10px" data-th="dark">ليلي</button><button class="btn o" style="padding:6px 10px" data-th="eye">مريح للعين</button></div><b>حجم الخط</b><div class="row" style="margin-top:8px"><button class="btn o" id="zm">A−</button><span id="zv">100%</span><button class="btn o" id="zp">A+</button></div></div>
 <nav>
@@ -326,7 +341,8 @@ caches.open("qaudio").then(function(c){return c.match(u)}).then(function(r){retu
 function qui(){$("qpl").textContent=QP?"⏸":"▶";$("qci").textContent=QI>=0?"آية "+(QI+1)+" / "+QD[QN].a.length:"";
 $("qtx").querySelectorAll(".qa[data-k]").forEach(function(d){d.classList.toggle("cur",+d.dataset.k==QI)});
 var e=QI>=0&&QP?$("qtx").querySelector("[data-k='"+QI+"']"):null;if(e)e.scrollIntoView({block:"center",behavior:"smooth"})}
-AU.onended=function(){if(QI+1<QD[QN].a.length)qplay(QI+1);else{QP=false;qui()}};
+var TSCB=null;
+AU.onended=function(){if(TSCB){var f=TSCB;TSCB=null;f();return}if(QI+1<QD[QN].a.length)qplay(QI+1);else{QP=false;qui()}};
 AU.onerror=function(){QP=false;qui();$("qer").textContent="تعذر تشغيل الصوت. تأكد من النت أو جرّب شيخاً آخر."};
 $("qpl").onclick=function(){if(QP){AU.pause();QP=false;qui()}else if(QI<0)qplay(0);else{QP=true;AU.play().catch(function(){});qui()}};
 $("qnx").onclick=function(){if(QI+1<QD[QN].a.length)qplay(QI+1)};
@@ -353,6 +369,61 @@ function next(){if(!QDL||err||i>=ks.length)return Promise.resolve();var u=ks[i++
 return c.match(u).then(function(h){if(h){done++;$("qdi").textContent=done+" / "+ks.length;return}
 return fetch(u).then(function(r){if(!r.ok)throw 0;return c.put(u,r)}).then(function(){done++;$("qdi").textContent=done+" / "+ks.length})}).then(next)}
 return Promise.all([next(),next(),next()]).catch(function(){err=true;$("qer").textContent="تعذر التحميل: ممكن المصدر ما يسمح بالتحميل داخل التطبيق أو انقطع النت."}).then(function(){QDL=false;qdi()})})};
+function nz(t){return t.replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"").replace(/[\u0671\u0622\u0623\u0625]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي").replace(/[^\u0621-\u064A ]/g," ").replace(/\s+/g," ").trim()}
+function lev(a,b){var m=a.length,n=b.length,d=[],i,j;for(i=0;i<=m;i++)d[i]=[i];for(j=1;j<=n;j++)d[0][j]=j;for(i=1;i<=m;i++)for(j=1;j<=n;j++)d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]==b[j-1]?0:1));return d[m][n]}
+function weq(a,b){if(a==b)return true;var L=Math.max(a.length,b.length);return L>3&&lev(a,b)/L<=0.34}
+function align(E,S){var m=E.length,n=S.length,d=[],b=[],i,j;
+for(i=0;i<=m;i++){d[i]=[];b[i]=[]}
+d[0][0]=0;for(i=1;i<=m;i++){d[i][0]=i;b[i][0]=1}for(j=1;j<=n;j++){d[0][j]=j;b[0][j]=2}
+for(i=1;i<=m;i++)for(j=1;j<=n;j++){var c0=d[i-1][j-1]+(weq(E[i-1],S[j-1])?0:1.5),c1=d[i-1][j]+1,c2=d[i][j-1]+0.6,best=c0,bb=0;if(c1<best){best=c1;bb=1}if(c2<best){best=c2;bb=2}d[i][j]=best;b[i][j]=bb}
+var r=[];i=m;j=n;
+while(i>0||j>0){var t=b[i][j];if(i>0&&j>0&&t==0){r[i-1]=weq(E[i-1],S[j-1])?1:0;i--;j--}else if(i>0&&(t==1||j==0)){r[i-1]=0;i--}else{j--}}
+return r}
+function say(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="ar-SA";speechSynthesis.speak(u)}catch(e){}}
+var TSR=null,TSON=false,TSP="",TSC="",TSDONE=true;
+function tsplay(si,k,cb){AU.pause();TSCB=cb||null;QP=false;
+var u="https://everyayah.com/data/"+RC[+$("tsr").value].f+"/"+("00"+QD[si].n).slice(-3)+("00"+(k+1)).slice(-3)+".mp3",my=++QSEQ;
+var go=function(src){if(my!==QSEQ)return;if(QOU){URL.revokeObjectURL(QOU);QOU=null}if(src!==u)QOU=src;AU.src=src;AU.play().catch(function(){})};
+if(!window.caches){go(u);return}
+caches.open("qaudio").then(function(c){return c.match(u)}).then(function(r){return r?r.blob():null}).then(function(b){go(b?URL.createObjectURL(b):u)}).catch(function(){go(u)})}
+function tsrange(){var n=QD[+$("tss").value].a.length;$("tsf").value=1;$("tst").value=Math.min(n,5)}
+function tsinit(){$("tsm").textContent=QD?"":"جاري تحميل نص القرآن…";qfetch(function(){$("tsm").textContent="";if($("tss").options.length)return;
+$("tss").innerHTML=QD.map(function(x,i){return "<option value='"+i+"'>"+x.n+". "+x.name+"</option>"}).join("");
+$("tsr").innerHTML=RC.map(function(r,i){return "<option value='"+i+"'>"+r.n+"</option>"}).join("");$("tsr").value=QR;tsrange()})}
+function tsStart(){var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+if(!SR){$("tsm").textContent="المتصفح ما يدعم التعرف على الصوت. افتح التطبيق من Chrome.";return}
+AU.pause();TSDONE=false;TSP="";TSC="";TSON=true;$("tsx").innerHTML="";$("tsb").textContent="⏹ إنهاء التسميع";$("tsm").textContent="🎙 جارٍ الاستماع… اقرأ من حفظك";
+TSR=new SR();TSR.lang="ar-SA";TSR.continuous=true;TSR.interimResults=true;
+TSR.onresult=function(e){var t="";for(var i=0;i<e.results.length;i++)t+=" "+e.results[i][0].transcript;TSC=t;$("tsm").textContent="🎙 جارٍ الاستماع… ("+nz(TSP+" "+TSC).split(" ").filter(Boolean).length+" كلمة)"};
+TSR.onerror=function(e){if(e.error=="not-allowed"||e.error=="service-not-allowed"){TSON=false;TSDONE=true;$("tsm").textContent="لازم تسمح للميكروفون ثم أعد المحاولة.";$("tsb").textContent="🎙 ابدأ التسميع"}else if(e.error=="network"){TSON=false;TSDONE=true;$("tsm").textContent="التعرف على الصوت يحتاج اتصالاً بالنت.";$("tsb").textContent="🎙 ابدأ التسميع"}};
+TSR.onend=function(){if(TSON){TSP+=" "+TSC;TSC="";try{TSR.start()}catch(x){}}};
+try{TSR.start()}catch(x){}}
+function tsStop(){TSON=false;$("tsm").textContent="جاري التقييم…";TSR.onend=function(){tsEval()};try{TSR.stop()}catch(x){tsEval()}setTimeout(tsEval,2000)}
+function tsEval(){if(TSDONE)return;TSDONE=true;$("tsb").textContent="🎙 ابدأ التسميع";
+var S=nz(TSP+" "+TSC).split(" ").filter(Boolean);
+if(!S.length){$("tsm").textContent="ما سمعت شي. تأكد من الميكروفون وأعد المحاولة.";return}
+var si=+$("tss").value,f=Math.max(1,+$("tsf").value||1),t=Math.min(QD[si].a.length,+$("tst").value||f),E=[],items=[],bad={};
+for(var k=f-1;k<t;k++){var tx=QD[si].a[k];if(k==0&&QD[si].n!=1){var w=tx.split(" ");if(w.length>4&&sn(w[0])=="بسم")tx=w.slice(4).join(" ")}
+tx.split(" ").forEach(function(w){var n=nz(w);items.push({k:k,w:w,i:n?E.length:-1});if(n)E.push(n)})}
+var r=align(E,S);
+items.forEach(function(it){if(it.i>=0&&!r[it.i])bad[it.k]=1});
+var h="",cur=-1;
+function close(){if(cur<0)return;h+="<span class='qn'>"+(cur+1)+"</span>"+(bad[cur]?"<div><button class='btn o tsp' data-k='"+cur+"' style='padding:6px 10px;margin-top:6px'>▶ اسمع الآية الصحيحة</button></div>":"")+"</div>"}
+items.forEach(function(it){if(it.k!=cur){close();cur=it.k;h+="<div class='qa' style='cursor:default'>"}
+h+="<span style='"+(it.i<0?"":(r[it.i]?"color:var(--ac)":"color:#e05252;font-weight:700"))+"'>"+it.w+"</span> "});
+close();
+var bl=Object.keys(bad).map(Number),nb=bl.length;
+$("tsm").textContent=nb==0?"✅ صح: كلماتك مطابقة (لا نكشف أخطاء التجويد)":"❌ غلط: "+nb+" آية تحتاج مراجعة (الأحمر)";
+say(nb==0?"صح":"غلط");
+$("tsx").innerHTML=h+(nb?"<button class='btn' id='tsall' style='margin-top:10px'>▶ تشغيل الآيات الخاطئة بالترتيب</button>":"");
+$("tsx").querySelectorAll(".tsp").forEach(function(b){b.onclick=function(){tsplay(si,+b.dataset.k)}});
+if($("tsall"))$("tsall").onclick=function(){var i=0;(function nx(){if(i<bl.length)tsplay(si,bl[i++],nx)})()}}
+function qmode(m){if(TSON){TSON=false;TSDONE=true;try{TSR.abort()}catch(e){}$("tsb").textContent="🎙 ابدأ التسميع"}
+$("qm1").hidden=m!=1;$("qm2").hidden=m!=2;$("qmb1").className="btn"+(m==1?"":" o");$("qmb2").className="btn"+(m==2?"":" o");
+if(m==2)tsinit();else qinit()}
+$("qmb1").onclick=function(){qmode(1)};$("qmb2").onclick=function(){qmode(2)};
+$("tss").onchange=tsrange;
+$("tsb").onclick=function(){if(TSON)tsStop();else tsStart()};
 function qinit(){if(QD){qlist();return}qfetch(function(){qlist()})}
 document.querySelector('nav [data-t="5"]').addEventListener("click",qinit);
 var PF=ld("pref",{th:"auto",z:1});
