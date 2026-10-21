@@ -109,17 +109,17 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:8px}
 <h1>🎙 تسميع وتصحيح</h1>
 <div class="card">
 <div class="row"><span>السورة</span><select id="tss" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div>
-<div class="row" style="margin-top:8px"><span>من آية</span><input id="tsf" type="number" min="1" value="1"><span>إلى</span><input id="tst" type="number" min="1" value="5"></div>
+<div class="row" style="margin-top:8px"><span>من آية</span><input id="tsf" type="number" min="1" value="1"><span>إلى</span><input id="tst" type="number" min="1" value="5"><button class="btn o" id="tsfull" style="padding:6px 10px">السورة كاملة</button></div>
 <div class="row" style="margin-top:8px"><span>الشيخ</span><select id="tsr" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div>
 <p class="mut" style="margin:8px 0 0">اقرأ من حفظك والنص مخفي. تحتاج نت وميكروفون ومتصفح Chrome. «صح» تعني تطابق الكلمات فقط، ولا تشمل التجويد والحركات.</p>
 </div>
-<button class="btn" id="tsb" style="width:100%;font-size:18px;padding:14px">🎙 ابدأ التسميع</button>
+<button class="btn" id="ttb" style="width:100%;font-size:17px;padding:14px">🧑‍🏫 تسميع آية آية (تصحيح فوري)</button><button class="btn o" id="tsb" style="width:100%;margin-top:8px">🎙 مراجعة النطاق كاملاً</button>
 <div id="tsm" class="mut" style="margin:8px 0"></div>
 <div id="tsx"></div>
 </div>
 <div class="mut" style="margin-top:14px">التلاوات من <a href="https://everyayah.com/" target="_blank" rel="noopener" style="color:var(--ac)">everyayah.com</a>، جزى الله القرّاء والقائمين عليه خيراً. نص المصحف من Al-Quran Cloud API.</div>
 </section>
-<footer>الإصدار 2.0</footer>
+<footer>الإصدار 2.1</footer>
 </main>
 <button id="gear" aria-label="الإعدادات">⚙️</button><div id="pnl" hidden><b>المظهر</b><div class="row" style="margin:8px 0"><button class="btn o" style="padding:6px 10px" data-th="auto">تلقائي</button><button class="btn o" style="padding:6px 10px" data-th="light">فاتح</button><button class="btn o" style="padding:6px 10px" data-th="dark">ليلي</button><button class="btn o" style="padding:6px 10px" data-th="eye">مريح للعين</button></div><b>حجم الخط</b><div class="row" style="margin-top:8px"><button class="btn o" id="zm">A−</button><span id="zv">100%</span><button class="btn o" id="zp">A+</button></div></div>
 <nav>
@@ -332,13 +332,10 @@ $("qs").oninput=function(){if(QD)qlist()};
 function qpx(){PGX={};QD.forEach(function(S,si){S.a.forEach(function(t,k){var p=S.pg[k];(PGX[p]=PGX[p]||[]).push([si,k])})})}
 function qnext(c){var s=c[0],k=c[1];if(k+1<QD[s].a.length)return[s,k+1];if(s+1<QD.length)return[s+1,0];return null}
 function qurl(c){return "https://everyayah.com/data/"+RC[QR].f+"/"+("00"+QD[c[0]].n).slice(-3)+("00"+(c[1]+1)).slice(-3)+".mp3"}
-function qsrc(c,cb){var u=qurl(c);if(!window.caches){cb(u,false);return}
-caches.open("qaudio").then(function(ch){return ch.match(u)}).then(function(r){return r?r.blob():null}).then(function(b){cb(b?URL.createObjectURL(b):u,!!b)}).catch(function(){cb(u,false)})}
-function qset(el,src,isb){if(el._b){URL.revokeObjectURL(el._b);el._b=null}if(isb)el._b=src;el.src=src}
 function qpage(p,keep){p=Math.max(1,Math.min(604,p));QPG=p;var L=PGX[p]||[],h="";
 L.forEach(function(c){var si=c[0],k=c[1],S=QD[si],t=S.a[k];
-if(k==0){h+="<div class='qsh'>"+S.name+"</div>";if(si!=0&&si!=8)h+="<span class='qbs'>"+QD[0].a[0]+"</span>";if(si!=0){var w=t.split(" ");if(w.length>4&&sn(w[0])=="بسم")t=w.slice(4).join(" ")}}
-h+="<span class='qv' data-s='"+si+"' data-k='"+k+"'>"+t+" <span class='qn'>"+(k+1)+"</span> </span>"});
+if(k==0){h+="<div class='qsh'>"+S.name+"</div>";if(si!=0&&si!=8)h+="<span class='qbs'>"+QD[0].a[0]+"</span>";if(si!=0)t=qbism(t);}
+h+="<span class='qv"+(si==0&&k==0?" qbs":"")+"' data-s='"+si+"' data-k='"+k+"'>"+t+" <span class='qn'>"+(k+1)+"</span> </span>"});
 $("qtx").innerHTML=h;if(L.length)QN=L[0][0];
 $("qtx").querySelectorAll(".qv").forEach(function(d){d.onclick=function(){qplay([+d.dataset.s,+d.dataset.k])}});
 $("qpg").textContent="صفحة "+p+" / 604";$("qtt").textContent=QD[QN].name;qdi();qui();if(!keep)window.scrollTo(0,0)}
@@ -346,22 +343,61 @@ function qui(){$("qpl").textContent=QP?"⏸":"▶";
 $("qtx").querySelectorAll(".qv").forEach(function(d){d.classList.toggle("cur",!!QCUR&&+d.dataset.s==QCUR[0]&&+d.dataset.k==QCUR[1])});
 $("qci").textContent=QCUR?"آية "+(QCUR[1]+1):"";
 var e=QCUR&&QP?$("qtx").querySelector(".qv.cur"):null;if(e)e.scrollIntoView({block:"center",behavior:"smooth"})}
-function qopen(si,k){AU.pause();QP=false;QCUR=null;TSCB=null;$("qwrap").hidden=true;$("qread").hidden=false;$("qer").textContent="";
+function qopen(si,k){qstopAll();AU.pause();QP=false;QCUR=null;TSCB=null;$("qwrap").hidden=true;$("qread").hidden=false;$("qer").textContent="";
 qpage(QD[si].pg[k],true);window.scrollTo(0,0);
 if(k>0){var e=$("qtx").querySelector(".qv[data-s='"+si+"'][data-k='"+k+"']");if(e)e.scrollIntoView({block:"center"})}}
-function qpre(n,my){if(!n)return;var el=AUS[1-AI];qsrc(n,function(src,b){if(my!==QSEQ)return;qset(el,src,b);el.preload="auto";PRE={key:n[0]+":"+n[1]}})}
-function qplay(c){QCUR=c;QP=true;TSCB=null;$("qer").textContent="";QL={s:c[0],i:c[1]};sv("qlast",QL);
-var pg=QD[c[0]].pg[c[1]];if(pg!=QPG)qpage(pg,true);qui();var my=++QSEQ,key=c[0]+":"+c[1];
-if(PRE&&PRE.key==key){AU.pause();AI=1-AI;AU=AUS[AI];PRE=null;AU.play().catch(function(){});qpre(qnext(c),my)}
-else{AU.pause();qsrc(c,function(src,b){if(my!==QSEQ)return;qset(AU,src,b);AU.play().catch(function(){});qpre(qnext(c),my)})}}
-function qend(){if(TSCB){var f=TSCB;TSCB=null;f();return}if(!QP||!QCUR)return;var n=qnext(QCUR);if(n)qplay(n);else{QP=false;qui()}}
+$("qpn").onclick=function(){qpage(QPG+1)};$("qpp").onclick=function(){qpage(QPG-1)};
+var AC=null,QSRCS=[],QEV=[],QGEN=0,QBUF={};
+function acx(){if(!AC)AC=new (window.AudioContext||window.webkitAudioContext)();return AC}
+setInterval(function(){if(!AC||!QEV.length)return;var n=AC.currentTime,run=[];QEV=QEV.filter(function(e){if(e.g!==QGEN)return false;if(n>=e.t){run.push(e);return false}return true});run.forEach(function(e){e.f()})},80);
+function qstopAll(){QGEN++;QEV=[];QSRCS.forEach(function(x){try{x.stop()}catch(e){}});QSRCS=[];QBUF={};if(AC&&AC.state=="suspended")AC.resume()}
+function qraw(u){var f=function(){return fetch(u).then(function(r){if(!r.ok)throw 0;return r.arrayBuffer()})};
+if(!window.caches)return f();
+return caches.open("qaudio").then(function(c){return c.match(u)}).then(function(r){return r?r.arrayBuffer():f()})}
+function qbuf(c){var u=qurl(c);if(!QBUF[u])QBUF[u]=qraw(u).then(function(ab){return new Promise(function(ok,no){acx().decodeAudioData(ab,ok,no)})});return QBUF[u]}
+function qplay(c){qstopAll();AU.pause();TSCB=null;QCUR=c;QP=true;$("qer").textContent="";var g=QGEN,ctx=acx();ctx.resume();qui();qsched(c,ctx.currentTime+0.05,g)}
+function qsched(c,when,g){qbuf(c).then(function(buf){if(g!==QGEN)return;var ctx=acx(),x=ctx.createBufferSource();x.buffer=buf;x.connect(ctx.destination);
+var st=Math.max(when,ctx.currentTime+0.03);x.start(st);QSRCS.push(x);var end=st+buf.duration,n=qnext(c);
+if(n)qbuf(n).catch(function(){});
+QEV.push({g:g,t:st,f:function(){QCUR=c;QL={s:c[0],i:c[1]};sv("qlast",QL);var pg=QD[c[0]].pg[c[1]];if(pg!=QPG)qpage(pg,true);qui();delete QBUF[qurl(c)];if(n)qsched(n,end,g)}});
+if(!n)QEV.push({g:g,t:end,f:function(){QP=false;qui()}})
+}).catch(function(){if(g!==QGEN)return;QP=false;qui();$("qer").textContent="تعذر تشغيل الصوت. تأكد من النت أو جرّب شيخاً آخر."})}
+function qend(){if(TSCB){var f=TSCB;TSCB=null;f()}}
 AUS[0].onended=AUS[1].onended=qend;
-AUS[0].onerror=AUS[1].onerror=function(){if(this!==AU)return;QP=false;qui();$("qer").textContent="تعذر تشغيل الصوت. تأكد من النت أو جرّب شيخاً آخر."};
-$("qpl").onclick=function(){if(QP){AU.pause();QP=false;qui()}else if(QCUR){QP=true;AU.play().catch(function(){});qui()}else{var L=PGX[QPG];if(L&&L.length)qplay(L[0])}};
+$("qpl").onclick=function(){if(QP){if(AC)AC.suspend();QP=false;qui()}else if(QCUR){if(AC&&AC.state=="suspended"){AC.resume();QP=true;qui()}else qplay(QCUR)}else{var L=PGX[QPG];if(L&&L.length)qplay(L[0])}};
 $("qnx").onclick=function(){var n=QCUR?qnext(QCUR):(PGX[QPG]||[])[0];if(n)qplay(n)};
 $("qpv").onclick=function(){if(!QCUR)return;var s=QCUR[0],k=QCUR[1],c=k>0?[s,k-1]:(s>0?[s-1,QD[s-1].a.length-1]:null);if(c)qplay(c)};
-$("qback").onclick=function(){AU.pause();QP=false;QCUR=null;$("qread").hidden=true;$("qwrap").hidden=false;qlist()};
-$("qpn").onclick=function(){qpage(QPG+1)};$("qpp").onclick=function(){qpage(QPG-1)};
+$("qback").onclick=function(){qstopAll();AU.pause();QP=false;QCUR=null;$("qread").hidden=true;$("qwrap").hidden=false;qlist()};
+function qbism(t){var w=t.split(" ");if(w.length>4&&nz(w.slice(0,4).join(" "))=="بسم الله الرحمن الرحيم")return w.slice(4).join(" ");return t}
+function tone(ok){try{var C=acx(),o=C.createOscillator(),g=C.createGain();o.connect(g);g.connect(C.destination);o.type=ok?"sine":"square";g.gain.value=0.15;var t=C.currentTime;if(ok){o.frequency.setValueAtTime(660,t);o.frequency.setValueAtTime(880,t+0.15)}else{o.frequency.setValueAtTime(200,t)}o.start(t);o.stop(t+(ok?0.35:0.4))}catch(e){}}
+var TT=null,TTR=null;
+function ttStop(){TT=null;try{TTR.abort()}catch(e){}qstopAll();AU.pause();$("ttb").textContent="🧑‍🏫 تسميع آية آية (تصحيح فوري)"}
+function ttNext(T){T.k++;if(T.k>=T.t){$("tsm").textContent="✅ أتممت النطاق، ما شاء الله";ttStop();return}ttListen()}
+function ttBtns(T){var d=document.createElement("div");d.className="row";d.style.marginTop="10px";d.innerHTML="<button class='btn' id='ttr'>🔁 أعد الآية</button><button class='btn o' id='ttn'>التالية ⏭</button>";$("tsx").appendChild(d);$("ttr").onclick=function(){qstopAll();AU.pause();if(TT===T)ttListen()};$("ttn").onclick=function(){qstopAll();AU.pause();if(TT===T)ttNext(T)}}
+function ttListen(){var T=TT;if(!T)return;
+$("tsm").textContent="🎙 آية "+(T.k+1)+" من "+T.t+" — اقرأها من حفظك";
+$("tsx").innerHTML="<div class='qa' style='cursor:default;text-align:center'>🎙 …</div>";
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition,R=new SR(),txt="",tm=null,done=false;TTR=R;
+R.lang="ar-SA";R.continuous=true;R.interimResults=true;
+function fin(){if(done)return;done=true;clearTimeout(tm);if(TT===T)ttEval(T,txt)}
+function stop(){try{R.stop()}catch(x){fin()}}
+R.onresult=function(e){var t="";for(var i=0;i<e.results.length;i++)t+=" "+e.results[i][0].transcript;txt=t;clearTimeout(tm);tm=setTimeout(stop,2500)};
+R.onerror=function(e){if(e.error=="not-allowed"||e.error=="service-not-allowed"){$("tsm").textContent="لازم تسمح للميكروفون.";ttStop()}else if(e.error=="network"){$("tsm").textContent="التعرف على الصوت يحتاج نت.";ttStop()}};
+R.onend=fin;tm=setTimeout(stop,15000);
+try{R.start()}catch(x){}}
+function ttEval(T,txt){var S=nz(txt).split(" ").filter(Boolean),tx=QD[T.si].a[T.k];if(T.k==0&&T.si!=0)tx=qbism(tx);
+if(!S.length){$("tsm").textContent="ما سمعتك، أعد الآية.";ttBtns(T);return}
+var E=[];tx.split(" ").forEach(function(w){var n=nz(w);if(n)E.push(n)});
+var r=align(E,S),ok=r.every(function(x){return x==1}),h="<div class='qa' style='cursor:default'>",wi=0;
+tx.split(" ").forEach(function(w){var n=nz(w),c="";if(n){c=r[wi]?"color:var(--ac)":"color:#e05252;font-weight:700";wi++}h+="<span style='"+c+"'>"+w+"</span> "});
+$("tsx").innerHTML=h+"<span class='qn'>"+(T.k+1)+"</span></div>";tone(ok);
+if(ok){$("tsm").textContent="✅ صح";setTimeout(function(){if(TT===T)ttNext(T)},1200)}
+else{$("tsm").textContent="❌ غلط، اسمع الآية الصحيحة";tsplay(T.si,T.k);ttBtns(T)}}
+$("ttb").onclick=function(){if(TT){ttStop();return}
+var SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(!SR){$("tsm").textContent="المتصفح ما يدعم التعرف على الصوت. افتح التطبيق من Chrome.";return}
+var si=+$("tss").value,f=Math.max(1,+$("tsf").value||1),t=Math.min(QD[si].a.length,+$("tst").value||f);
+qstopAll();AU.pause();acx().resume();TT={si:si,k:f-1,t:t};$("ttb").textContent="⏹ إيقاف التسميع";ttListen()};
+$("tsfull").onclick=function(){var n=QD[+$("tss").value].a.length;$("tsf").value=1;$("tst").value=n};
 function qkeys(n,f){var a=[],N=QD[n-1].a.length;for(var k=0;k<N;k++)a.push("https://everyayah.com/data/"+f+"/"+("00"+n).slice(-3)+("00"+(k+1)).slice(-3)+".mp3");return a}
 function qdi(){if(!window.caches){$("qdl").hidden=true;return}
 var ks=qkeys(QD[QN].n,RC[QR].f);
@@ -392,7 +428,7 @@ while(i>0||j>0){var t=b[i][j];if(i>0&&j>0&&t==0){r[i-1]=weq(E[i-1],S[j-1])?1:0;i
 return r}
 function say(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="ar-SA";speechSynthesis.speak(u)}catch(e){}}
 var TSR=null,TSON=false,TSP="",TSC="",TSDONE=true;
-function tsplay(si,k,cb){AU.pause();TSCB=cb||null;QP=false;QCUR=null;
+function tsplay(si,k,cb){qstopAll();AU.pause();TSCB=cb||null;QP=false;QCUR=null;
 var u="https://everyayah.com/data/"+RC[+$("tsr").value].f+"/"+("00"+QD[si].n).slice(-3)+("00"+(k+1)).slice(-3)+".mp3",my=++QSEQ;
 var go=function(src){if(my!==QSEQ)return;if(QOU){URL.revokeObjectURL(QOU);QOU=null}if(src!==u)QOU=src;AU.src=src;AU.play().catch(function(){})};
 if(!window.caches){go(u);return}
@@ -406,15 +442,15 @@ if(!SR){$("tsm").textContent="المتصفح ما يدعم التعرف على �
 AU.pause();TSDONE=false;TSP="";TSC="";TSON=true;$("tsx").innerHTML="";$("tsb").textContent="⏹ إنهاء التسميع";$("tsm").textContent="🎙 جارٍ الاستماع… اقرأ من حفظك";
 TSR=new SR();TSR.lang="ar-SA";TSR.continuous=true;TSR.interimResults=true;
 TSR.onresult=function(e){var t="";for(var i=0;i<e.results.length;i++)t+=" "+e.results[i][0].transcript;TSC=t;$("tsm").textContent="🎙 جارٍ الاستماع… ("+nz(TSP+" "+TSC).split(" ").filter(Boolean).length+" كلمة)"};
-TSR.onerror=function(e){if(e.error=="not-allowed"||e.error=="service-not-allowed"){TSON=false;TSDONE=true;$("tsm").textContent="لازم تسمح للميكروفون ثم أعد المحاولة.";$("tsb").textContent="🎙 ابدأ التسميع"}else if(e.error=="network"){TSON=false;TSDONE=true;$("tsm").textContent="التعرف على الصوت يحتاج اتصالاً بالنت.";$("tsb").textContent="🎙 ابدأ التسميع"}};
+TSR.onerror=function(e){if(e.error=="not-allowed"||e.error=="service-not-allowed"){TSON=false;TSDONE=true;$("tsm").textContent="لازم تسمح للميكروفون ثم أعد المحاولة.";$("tsb").textContent="🎙 مراجعة النطاق كاملاً"}else if(e.error=="network"){TSON=false;TSDONE=true;$("tsm").textContent="التعرف على الصوت يحتاج اتصالاً بالنت.";$("tsb").textContent="🎙 مراجعة النطاق كاملاً"}};
 TSR.onend=function(){if(TSON){TSP+=" "+TSC;TSC="";try{TSR.start()}catch(x){}}};
 try{TSR.start()}catch(x){}}
 function tsStop(){TSON=false;$("tsm").textContent="جاري التقييم…";TSR.onend=function(){tsEval()};try{TSR.stop()}catch(x){tsEval()}setTimeout(tsEval,2000)}
-function tsEval(){if(TSDONE)return;TSDONE=true;$("tsb").textContent="🎙 ابدأ التسميع";
+function tsEval(){if(TSDONE)return;TSDONE=true;$("tsb").textContent="🎙 مراجعة النطاق كاملاً";
 var S=nz(TSP+" "+TSC).split(" ").filter(Boolean);
 if(!S.length){$("tsm").textContent="ما سمعت شي. تأكد من الميكروفون وأعد المحاولة.";return}
 var si=+$("tss").value,f=Math.max(1,+$("tsf").value||1),t=Math.min(QD[si].a.length,+$("tst").value||f),E=[],items=[],bad={};
-for(var k=f-1;k<t;k++){var tx=QD[si].a[k];if(k==0&&QD[si].n!=1){var w=tx.split(" ");if(w.length>4&&sn(w[0])=="بسم")tx=w.slice(4).join(" ")}
+for(var k=f-1;k<t;k++){var tx=QD[si].a[k];if(k==0&&QD[si].n!=1)tx=qbism(tx);
 tx.split(" ").forEach(function(w){var n=nz(w);items.push({k:k,w:w,i:n?E.length:-1});if(n)E.push(n)})}
 var r=align(E,S);
 items.forEach(function(it){if(it.i>=0&&!r[it.i])bad[it.k]=1});
@@ -425,11 +461,11 @@ h+="<span style='"+(it.i<0?"":(r[it.i]?"color:var(--ac)":"color:#e05252;font-wei
 close();
 var bl=Object.keys(bad).map(Number),nb=bl.length;
 $("tsm").textContent=nb==0?"✅ صح: كلماتك مطابقة (لا نكشف أخطاء التجويد)":"❌ غلط: "+nb+" آية تحتاج مراجعة (الأحمر)";
-say(nb==0?"صح":"غلط");
+tone(nb==0);
 $("tsx").innerHTML=h+(nb?"<button class='btn' id='tsall' style='margin-top:10px'>▶ تشغيل الآيات الخاطئة بالترتيب</button>":"");
 $("tsx").querySelectorAll(".tsp").forEach(function(b){b.onclick=function(){tsplay(si,+b.dataset.k)}});
 if($("tsall"))$("tsall").onclick=function(){var i=0;(function nx(){if(i<bl.length)tsplay(si,bl[i++],nx)})()}}
-function qmode(m){if(TSON){TSON=false;TSDONE=true;try{TSR.abort()}catch(e){}$("tsb").textContent="🎙 ابدأ التسميع"}
+function qmode(m){if(TT)ttStop();if(TSON){TSON=false;TSDONE=true;try{TSR.abort()}catch(e){}$("tsb").textContent="🎙 مراجعة النطاق كاملاً"}
 $("qm1").hidden=m!=1;$("qm2").hidden=m!=2;$("qmb1").className="btn"+(m==1?"":" o");$("qmb2").className="btn"+(m==2?"":" o");
 if(m==2)tsinit();else qinit()}
 $("qmb1").onclick=function(){qmode(1)};$("qmb2").onclick=function(){qmode(2)};
