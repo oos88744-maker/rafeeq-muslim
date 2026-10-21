@@ -53,6 +53,7 @@ nav button{font-size:11px;padding:8px 2px;display:flex;flex-direction:column;ali
 .qa{padding:12px 6px;border-bottom:1px solid var(--bd);line-height:2.3;font-size:24px;cursor:pointer;font-family:"Amiri Quran","Scheherazade New","Noto Naskh Arabic",serif;text-align:justify}
 .qa.cur{background:var(--ac2)}
 .qn{display:inline-flex;align-items:center;justify-content:center;min-width:28px;height:28px;border:1px solid var(--ac);border-radius:50%;color:var(--ac);font-size:13px;margin:0 6px;font-family:system-ui}
+.qpage{padding:14px 10px;border:1px solid var(--bd);border-radius:12px;background:var(--card);line-height:2.5;font-size:24px;text-align:justify;font-family:"Amiri Quran","Scheherazade New","Noto Naskh Arabic",serif}.qv{cursor:pointer}.qv.cur{background:var(--ac2);border-radius:6px}.qsh{text-align:center;color:var(--ac);font-weight:700;font-size:20px;margin:10px 0;border:1px solid var(--ac);border-radius:10px;padding:6px}.qbs{text-align:center;display:block;font-size:22px}
 footer{text-align:center;color:var(--mut);font-size:12px;margin-top:8px}
 </style>
 </head>
@@ -102,8 +103,8 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:8px}
 <div class="row" style="margin-bottom:10px;flex-wrap:nowrap"><button class="btn" id="qmb1" style="flex:1">📖 قراءة واستماع</button><button class="btn o" id="qmb2" style="flex:1">🎙 تسميع وتصحيح</button></div>
 <div id="qm1">
 <div id="qwrap"><h1>📜 القرآن الكريم</h1><div id="qst" class="mut"></div><div id="qlastb"></div><input id="qs" placeholder="ابحث باسم السورة أو رقمها" style="width:100%;text-align:right;margin-bottom:10px"><div id="qsl"></div></div>
-<div id="qread" hidden><div class="card" style="position:sticky;top:env(safe-area-inset-top,0px);z-index:5"><div class="row" style="flex-wrap:nowrap;justify-content:space-between"><button class="btn o" id="qback" style="padding:6px 10px">☰ السور</button><b id="qtt"></b><span id="qci" class="mut"></span></div><div class="row" style="margin-top:8px;flex-wrap:nowrap"><button class="btn o" id="qpv">⏮</button><button class="btn" id="qpl">▶</button><button class="btn o" id="qnx">⏭</button><select id="qrc" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div><div class="row" style="margin-top:6px"><button class="btn o" id="qdl" style="padding:6px 10px">⬇ تحميل للسماع بدون نت</button><span id="qdi" class="mut"></span></div><div id="qer" class="mut"></div></div><div id="qtx"></div>
-</div>
+<div id="qread" hidden><div class="card" style="position:sticky;top:env(safe-area-inset-top,0px);z-index:5"><div class="row" style="flex-wrap:nowrap;justify-content:space-between"><button class="btn o" id="qback" style="padding:6px 10px">☰ السور</button><b id="qtt"></b><span id="qci" class="mut"></span></div><div class="row" style="margin-top:8px;flex-wrap:nowrap"><button class="btn o" id="qpv">⏮</button><button class="btn" id="qpl">▶</button><button class="btn o" id="qnx">⏭</button><select id="qrc" style="flex:1;min-width:0;background:var(--bg);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:8px"></select></div><div class="row" style="margin-top:6px"><button class="btn o" id="qdl" style="padding:6px 10px">⬇ تحميل للسماع بدون نت</button><span id="qdi" class="mut"></span></div><div id="qer" class="mut"></div></div><div id="qtx" class="qpage"></div><div class="row" style="justify-content:space-between;margin:10px 0"><button class="btn o" id="qpp">السابقة</button><span id="qpg" class="mut"></span><button class="btn o" id="qpn">التالية</button></div>
+</div></div>
 <div id="qm2" hidden>
 <h1>🎙 تسميع وتصحيح</h1>
 <div class="card">
@@ -118,7 +119,7 @@ footer{text-align:center;color:var(--mut);font-size:12px;margin-top:8px}
 </div>
 <div class="mut" style="margin-top:14px">التلاوات من <a href="https://everyayah.com/" target="_blank" rel="noopener" style="color:var(--ac)">everyayah.com</a>، جزى الله القرّاء والقائمين عليه خيراً. نص المصحف من Al-Quran Cloud API.</div>
 </section>
-<footer>الإصدار 1.9</footer>
+<footer>الإصدار 2.0</footer>
 </main>
 <button id="gear" aria-label="الإعدادات">⚙️</button><div id="pnl" hidden><b>المظهر</b><div class="row" style="margin:8px 0"><button class="btn o" style="padding:6px 10px" data-th="auto">تلقائي</button><button class="btn o" style="padding:6px 10px" data-th="light">فاتح</button><button class="btn o" style="padding:6px 10px" data-th="dark">ليلي</button><button class="btn o" style="padding:6px 10px" data-th="eye">مريح للعين</button></div><b>حجم الخط</b><div class="row" style="margin-top:8px"><button class="btn o" id="zm">A−</button><span id="zv">100%</span><button class="btn o" id="zp">A+</button></div></div>
 <nav>
@@ -313,44 +314,54 @@ q("uct",".ux").onclick=function(){if(confirm("تصفّر عدّاد "+L[m]+"؟")
 $("umr").innerHTML=PAGE;ur();
 kr();tr();qr();fr();
 var RC=[{n:"مشاري العفاسي",f:"Alafasy_128kbps"},{n:"محمود خليل الحصري",f:"Husary_64kbps"},{n:"محمد صديق المنشاوي (مرتل)",f:"Minshawy_Murattal_128kbps"},{n:"عبدالباسط عبدالصمد (مرتل)",f:"Abdul_Basit_Murattal_64kbps"},{n:"سعود الشريم",f:"Saood_ash-Shuraym_128kbps"},{n:"عبدالرحمن السديس",f:"Abdurrahmaan_As-Sudais_192kbps"},{n:"ماهر المعيقلي",f:"MaherAlMuaiqly128kbps"}];
-var QD=null,QN=0,QI=-1,QP=false,AU=new Audio(),QR=ld("qrec",0),QL=ld("qlast",null);
+var QD=null,QN=0,QI=-1,QP=false,AUS=[new Audio(),new Audio()],AI=0,AU=AUS[0],PRE=null,QCUR=null,QPG=1,TSCB=null,PGX=null,QR=ld("qrec",0),QL=ld("qlast",null);
 function sn(t){return t.replace(/[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED\u0640]/g,"").replace(/[\u0671\u0622\u0623\u0625]/g,"ا")}
-function qfetch(cb){var c=ld("qtext",null);if(c&&c.length==114){QD=c;cb();return}
+function qfetch(cb){try{localStorage.removeItem("qtext")}catch(e){}var c=ld("qtext2",null);if(c&&c.length==114&&c[0].pg){QD=c;qpx();cb();return}
 $("qst").textContent="جاري تحميل نص القرآن (مرة واحدة فقط)…";
-fetch("https://api.alquran.cloud/v1/quran/quran-uthmani").then(function(r){return r.json()}).then(function(j){QD=j.data.surahs.map(function(x){return{n:x.number,name:x.name,a:x.ayahs.map(function(y){return y.text})}});sv("qtext",QD);$("qst").textContent="";cb()}).catch(function(){$("qst").innerHTML="تعذر تحميل النص، تأكد من الاتصال. <button class='btn o' id='qre'>إعادة المحاولة</button>";$("qre").onclick=function(){qinit()}})}
+fetch("https://api.alquran.cloud/v1/quran/quran-uthmani").then(function(r){return r.json()}).then(function(j){QD=j.data.surahs.map(function(x){return{n:x.number,name:x.name,a:x.ayahs.map(function(y){return y.text}),pg:x.ayahs.map(function(y){return y.page})}});sv("qtext2",QD);qpx();$("qst").textContent="";cb()}).catch(function(){$("qst").innerHTML="تعذر تحميل النص، تأكد من الاتصال. <button class='btn o' id='qre'>إعادة المحاولة</button>";$("qre").onclick=function(){qinit()}})}
 function qlist(){var q=sn($("qs").value.trim()),h="";
 QD.forEach(function(x,i){if(q&&sn(x.name).indexOf(q)<0&&String(x.n)!=q)return;h+="<button class='qs' data-i='"+i+"'><span><span class='qn'>"+x.n+"</span>"+x.name+"</span><span class='mut'>"+x.a.length+" آية</span></button>"});
 $("qsl").innerHTML=h;
 $("qsl").querySelectorAll(".qs").forEach(function(b){b.onclick=function(){qopen(+b.dataset.i,0)}});
 $("qlastb").innerHTML=QL&&QD[QL.s]?"<button class='btn' id='qgo' style='margin-bottom:10px'>تابع القراءة: "+QD[QL.s].name+" · آية "+(QL.i+1)+"</button>":"";
 if($("qgo"))$("qgo").onclick=function(){qopen(QL.s,QL.i)}}
-function qopen(s,i){AU.pause();QP=false;QN=s;QI=-1;var S=QD[s],h="";
-if(S.n!=1&&S.n!=9)h+="<div class='qa' style='text-align:center;cursor:default'>"+QD[0].a[0]+"</div>";
-S.a.forEach(function(t,k){if(k==0&&S.n!=1){var w=t.split(" ");if(w.length>4&&sn(w[0])=="بسم")t=w.slice(4).join(" ")}
-h+="<div class='qa' data-k='"+k+"'>"+t+"<span class='qn'>"+(k+1)+"</span></div>"});
-$("qtx").innerHTML=h;$("qtt").textContent=S.name;$("qwrap").hidden=true;$("qread").hidden=false;
-$("qtx").querySelectorAll(".qa[data-k]").forEach(function(d){d.onclick=function(){qplay(+d.dataset.k)}});
-$("qer").textContent="";qui();qdi();window.scrollTo(0,0);
-if(i>0){var e=$("qtx").querySelector("[data-k='"+i+"']");if(e)e.scrollIntoView({block:"center"})}}
-function qurl(k){return "https://everyayah.com/data/"+RC[QR].f+"/"+("00"+QD[QN].n).slice(-3)+("00"+(k+1)).slice(-3)+".mp3"}
 var QSEQ=0,QDL=false,QOU=null;
-function qplay(k){QI=k;QP=true;$("qer").textContent="";QL={s:QN,i:k};sv("qlast",QL);qui();var u=qurl(k),my=++QSEQ;
-var go=function(src){if(my!==QSEQ)return;if(QOU){URL.revokeObjectURL(QOU);QOU=null}if(src!==u)QOU=src;AU.src=src;AU.play().catch(function(){})};
-if(!window.caches){go(u);return}
-caches.open("qaudio").then(function(c){return c.match(u)}).then(function(r){return r?r.blob():null}).then(function(b){go(b?URL.createObjectURL(b):u)}).catch(function(){go(u)})}
-function qui(){$("qpl").textContent=QP?"⏸":"▶";$("qci").textContent=QI>=0?"آية "+(QI+1)+" / "+QD[QN].a.length:"";
-$("qtx").querySelectorAll(".qa[data-k]").forEach(function(d){d.classList.toggle("cur",+d.dataset.k==QI)});
-var e=QI>=0&&QP?$("qtx").querySelector("[data-k='"+QI+"']"):null;if(e)e.scrollIntoView({block:"center",behavior:"smooth"})}
-var TSCB=null;
-AU.onended=function(){if(TSCB){var f=TSCB;TSCB=null;f();return}if(QI+1<QD[QN].a.length)qplay(QI+1);else{QP=false;qui()}};
-AU.onerror=function(){QP=false;qui();$("qer").textContent="تعذر تشغيل الصوت. تأكد من النت أو جرّب شيخاً آخر."};
-$("qpl").onclick=function(){if(QP){AU.pause();QP=false;qui()}else if(QI<0)qplay(0);else{QP=true;AU.play().catch(function(){});qui()}};
-$("qnx").onclick=function(){if(QI+1<QD[QN].a.length)qplay(QI+1)};
-$("qpv").onclick=function(){qplay(Math.max(0,QI-1))};
-$("qback").onclick=function(){AU.pause();QP=false;$("qread").hidden=true;$("qwrap").hidden=false;qlist()};
 $("qrc").innerHTML=RC.map(function(r,i){return "<option value='"+i+"'>"+r.n+"</option>"}).join("");$("qrc").value=QR;
-$("qrc").onchange=function(){QR=+$("qrc").value;sv("qrec",QR);qdi();if(QP&&QI>=0)qplay(QI)};
+$("qrc").onchange=function(){QR=+$("qrc").value;sv("qrec",QR);PRE=null;qdi();if(QP&&QCUR)qplay(QCUR)};
 $("qs").oninput=function(){if(QD)qlist()};
+function qpx(){PGX={};QD.forEach(function(S,si){S.a.forEach(function(t,k){var p=S.pg[k];(PGX[p]=PGX[p]||[]).push([si,k])})})}
+function qnext(c){var s=c[0],k=c[1];if(k+1<QD[s].a.length)return[s,k+1];if(s+1<QD.length)return[s+1,0];return null}
+function qurl(c){return "https://everyayah.com/data/"+RC[QR].f+"/"+("00"+QD[c[0]].n).slice(-3)+("00"+(c[1]+1)).slice(-3)+".mp3"}
+function qsrc(c,cb){var u=qurl(c);if(!window.caches){cb(u,false);return}
+caches.open("qaudio").then(function(ch){return ch.match(u)}).then(function(r){return r?r.blob():null}).then(function(b){cb(b?URL.createObjectURL(b):u,!!b)}).catch(function(){cb(u,false)})}
+function qset(el,src,isb){if(el._b){URL.revokeObjectURL(el._b);el._b=null}if(isb)el._b=src;el.src=src}
+function qpage(p,keep){p=Math.max(1,Math.min(604,p));QPG=p;var L=PGX[p]||[],h="";
+L.forEach(function(c){var si=c[0],k=c[1],S=QD[si],t=S.a[k];
+if(k==0){h+="<div class='qsh'>"+S.name+"</div>";if(si!=0&&si!=8)h+="<span class='qbs'>"+QD[0].a[0]+"</span>";if(si!=0){var w=t.split(" ");if(w.length>4&&sn(w[0])=="بسم")t=w.slice(4).join(" ")}}
+h+="<span class='qv' data-s='"+si+"' data-k='"+k+"'>"+t+" <span class='qn'>"+(k+1)+"</span> </span>"});
+$("qtx").innerHTML=h;if(L.length)QN=L[0][0];
+$("qtx").querySelectorAll(".qv").forEach(function(d){d.onclick=function(){qplay([+d.dataset.s,+d.dataset.k])}});
+$("qpg").textContent="صفحة "+p+" / 604";$("qtt").textContent=QD[QN].name;qdi();qui();if(!keep)window.scrollTo(0,0)}
+function qui(){$("qpl").textContent=QP?"⏸":"▶";
+$("qtx").querySelectorAll(".qv").forEach(function(d){d.classList.toggle("cur",!!QCUR&&+d.dataset.s==QCUR[0]&&+d.dataset.k==QCUR[1])});
+$("qci").textContent=QCUR?"آية "+(QCUR[1]+1):"";
+var e=QCUR&&QP?$("qtx").querySelector(".qv.cur"):null;if(e)e.scrollIntoView({block:"center",behavior:"smooth"})}
+function qopen(si,k){AU.pause();QP=false;QCUR=null;TSCB=null;$("qwrap").hidden=true;$("qread").hidden=false;$("qer").textContent="";
+qpage(QD[si].pg[k],true);window.scrollTo(0,0);
+if(k>0){var e=$("qtx").querySelector(".qv[data-s='"+si+"'][data-k='"+k+"']");if(e)e.scrollIntoView({block:"center"})}}
+function qpre(n,my){if(!n)return;var el=AUS[1-AI];qsrc(n,function(src,b){if(my!==QSEQ)return;qset(el,src,b);el.preload="auto";PRE={key:n[0]+":"+n[1]}})}
+function qplay(c){QCUR=c;QP=true;TSCB=null;$("qer").textContent="";QL={s:c[0],i:c[1]};sv("qlast",QL);
+var pg=QD[c[0]].pg[c[1]];if(pg!=QPG)qpage(pg,true);qui();var my=++QSEQ,key=c[0]+":"+c[1];
+if(PRE&&PRE.key==key){AU.pause();AI=1-AI;AU=AUS[AI];PRE=null;AU.play().catch(function(){});qpre(qnext(c),my)}
+else{AU.pause();qsrc(c,function(src,b){if(my!==QSEQ)return;qset(AU,src,b);AU.play().catch(function(){});qpre(qnext(c),my)})}}
+function qend(){if(TSCB){var f=TSCB;TSCB=null;f();return}if(!QP||!QCUR)return;var n=qnext(QCUR);if(n)qplay(n);else{QP=false;qui()}}
+AUS[0].onended=AUS[1].onended=qend;
+AUS[0].onerror=AUS[1].onerror=function(){if(this!==AU)return;QP=false;qui();$("qer").textContent="تعذر تشغيل الصوت. تأكد من النت أو جرّب شيخاً آخر."};
+$("qpl").onclick=function(){if(QP){AU.pause();QP=false;qui()}else if(QCUR){QP=true;AU.play().catch(function(){});qui()}else{var L=PGX[QPG];if(L&&L.length)qplay(L[0])}};
+$("qnx").onclick=function(){var n=QCUR?qnext(QCUR):(PGX[QPG]||[])[0];if(n)qplay(n)};
+$("qpv").onclick=function(){if(!QCUR)return;var s=QCUR[0],k=QCUR[1],c=k>0?[s,k-1]:(s>0?[s-1,QD[s-1].a.length-1]:null);if(c)qplay(c)};
+$("qback").onclick=function(){AU.pause();QP=false;QCUR=null;$("qread").hidden=true;$("qwrap").hidden=false;qlist()};
+$("qpn").onclick=function(){qpage(QPG+1)};$("qpp").onclick=function(){qpage(QPG-1)};
 function qkeys(n,f){var a=[],N=QD[n-1].a.length;for(var k=0;k<N;k++)a.push("https://everyayah.com/data/"+f+"/"+("00"+n).slice(-3)+("00"+(k+1)).slice(-3)+".mp3");return a}
 function qdi(){if(!window.caches){$("qdl").hidden=true;return}
 var ks=qkeys(QD[QN].n,RC[QR].f);
@@ -381,7 +392,7 @@ while(i>0||j>0){var t=b[i][j];if(i>0&&j>0&&t==0){r[i-1]=weq(E[i-1],S[j-1])?1:0;i
 return r}
 function say(t){try{speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t);u.lang="ar-SA";speechSynthesis.speak(u)}catch(e){}}
 var TSR=null,TSON=false,TSP="",TSC="",TSDONE=true;
-function tsplay(si,k,cb){AU.pause();TSCB=cb||null;QP=false;
+function tsplay(si,k,cb){AU.pause();TSCB=cb||null;QP=false;QCUR=null;
 var u="https://everyayah.com/data/"+RC[+$("tsr").value].f+"/"+("00"+QD[si].n).slice(-3)+("00"+(k+1)).slice(-3)+".mp3",my=++QSEQ;
 var go=function(src){if(my!==QSEQ)return;if(QOU){URL.revokeObjectURL(QOU);QOU=null}if(src!==u)QOU=src;AU.src=src;AU.play().catch(function(){})};
 if(!window.caches){go(u);return}
